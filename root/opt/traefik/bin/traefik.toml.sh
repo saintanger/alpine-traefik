@@ -197,7 +197,7 @@ if [ "${TRAEFIK_HTTPS_ENABLE}" == "true" ] || [ "${TRAEFIK_HTTPS_ENABLE}" == "on
   filelist=`ls -1 ${TRAEFIK_SSL_PATH}/*.key | rev | cut -d"." -f2- | rev`
   RC=`echo $?`
 
-  if [ $RC -eq 0 ] && [ "${TRAEFIK_ACME_ENABLE}" == "false" ]; then
+  if [ $RC -eq 0 ]; then
       for i in $filelist; do
           if [ -f "$i.crt" ]; then
               TRAEFIK_ENTRYPOINTS_HTTPS=$TRAEFIK_ENTRYPOINTS_HTTPS"
@@ -217,7 +217,7 @@ if [ "${TRAEFIK_ADMIN_ENABLE}" == "true" ]; then
     compress = ${TRAEFIK_HTTP_COMPRESSION}
 "
     if [ "${TRAEFIK_ADMIN_AUTH_USERS}" != "" ]; then
-        echo ${TRAEFIK_ADMIN_AUTH_USERS} > "${SERVICE_HOME}/.htpasswd"
+        echo "${TRAEFIK_ADMIN_AUTH_USERS}" > "${SERVICE_HOME}/.htpasswd"
         TRAEFIK_ENTRYPOINTS_ADMIN=${TRAEFIK_ENTRYPOINTS_ADMIN}"\
     [entryPoints.traefik.auth.${TRAEFIK_ADMIN_AUTH_METHOD}]
       usersFile = \"${SERVICE_HOME}/.htpasswd\"
